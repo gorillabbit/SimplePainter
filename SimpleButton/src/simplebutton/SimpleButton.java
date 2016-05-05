@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 public class SimpleButton extends JFrame implements ActionListener{
 
-	public int A;
+	public int A;//ここが自分なりにメソッド外にフィールド宣言したところ
 	public int B;
 
 	public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class SimpleButton extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		A = 20;
+		A = 20;//ここの値をボタンをクリックした時に81行目に代入したい
 		B = 20;
 	}
 }
@@ -74,11 +74,11 @@ class Canvas extends JPanel implements MouseListener,MouseMotionListener {
     public void paintComponent(Graphics g) {
         g.setColor(Color.blue);
 
-        SimpleButton a = new SimpleButton();
-        SimpleButton b = new SimpleButton();
+        SimpleButton a = new SimpleButton();//コンストラクターSimpleButton()は未定義です
+        SimpleButton b = new SimpleButton();//コンストラクターSimpleButton()は未定義です
         a.A = 10;
         b.B = 10;
-		g.fillOval(x-a.A/2, y-b.B/2, a.A, b.B);
+		g.fillOval(x-a.A/2, y-b.B/2, a.A, b.B);//57行目の数値をここに代入したい
     }
         public void mouseClicked(MouseEvent e){
         }
