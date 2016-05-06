@@ -18,9 +18,6 @@ import javax.swing.JPanel;
 
 public class SimpleButton extends JFrame implements ActionListener{
 
-	public int A;//ここが自分なりにメソッド外にフィールド宣言したところ
-	public int B;
-
 	public static void main(String[] args) {
 		//フレームとキャンバス
 		SimpleButton frame = new SimpleButton("簡単なお絵かきソフト");
@@ -31,32 +28,28 @@ public class SimpleButton extends JFrame implements ActionListener{
 	}
 
 	SimpleButton(String title){
-		setTitle(title);
+		setTitle("title");
 		setBounds(100,100,500,450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 
 		//こっからボタン
 		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p,BoxLayout.PAGE_AXIS));
 
 		JButton button =new JButton("PenSize");
 		int height = button.getMaximumSize().height;
-		button.setForeground(Color.RED);
-		button.setBackground(Color.LIGHT_GRAY);
 		button.setMaximumSize(new Dimension(200, height));
 		button.addActionListener(this);
+		button.setActionCommand("1");
 
 		p.add(button);
-		p.setLayout(new BoxLayout(p,BoxLayout.PAGE_AXIS));
 
 		Container contentPane = getContentPane();
 		contentPane.add(p, BorderLayout.CENTER);
-	}
+		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		A = 20;//ここの値をボタンをクリックした時に81行目に代入したい
-		B = 20;
 	}
 }
 //クリックで円を、ドラッグで線を書くように
@@ -72,13 +65,19 @@ class Canvas extends JPanel implements MouseListener,MouseMotionListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.setColor(Color.blue);
 
-        SimpleButton a = new SimpleButton();//コンストラクターSimpleButton()は未定義です
-        SimpleButton b = new SimpleButton();//コンストラクターSimpleButton()は未定義です
-        a.A = 10;
-        b.B = 10;
-		g.fillOval(x-a.A/2, y-b.B/2, a.A, b.B);//57行目の数値をここに代入したい
+    	public void actionPerformed(ActionEvent e) {
+
+    	int A = 10;
+    	int B = 10;
+        g.setColor(Color.blue);
+		g.fillOval(x-A/2, y-B/2, A, B);//57行目の数値をここに代入したい
+
+		String cmd = e.getActionCommand();
+		if (cmd.equals("1")){
+			A = 20;
+		}
+    }
     }
         public void mouseClicked(MouseEvent e){
         }
