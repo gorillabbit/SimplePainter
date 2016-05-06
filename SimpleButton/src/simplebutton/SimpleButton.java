@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 public class SimpleButton extends JFrame implements ActionListener{
 
 	public static void main(String[] args) {
-		//フレームとキャンバス
 		SimpleButton frame = new SimpleButton("簡単なお絵かきソフト");
 		frame.setVisible(true);
 
@@ -32,7 +31,6 @@ public class SimpleButton extends JFrame implements ActionListener{
 		setBounds(100,100,500,450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//こっからボタン
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.PAGE_AXIS));
 
@@ -40,7 +38,7 @@ public class SimpleButton extends JFrame implements ActionListener{
 		int height = button.getMaximumSize().height;
 		button.setMaximumSize(new Dimension(200, height));
 		button.addActionListener(this);
-		button.setActionCommand("1");
+		button.setActionCommand("1");//ここが一番の更新
 
 		p.add(button);
 
@@ -52,7 +50,6 @@ public class SimpleButton extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 	}
 }
-//クリックで円を、ドラッグで線を書くように
 class Canvas extends JPanel implements MouseListener,MouseMotionListener {
 	private int x = -100;
 	private int y = -100;
@@ -66,12 +63,14 @@ class Canvas extends JPanel implements MouseListener,MouseMotionListener {
     @Override
     public void paintComponent(Graphics g) {
 
-    	public void actionPerformed(ActionEvent e) {
+    	public void actionPerformed(ActionEvent e) {/* 変数 actionPerformed に void は無効な型です
+    		                                        //トークン ")" に構文エラーがあります。正しくは ; です
+    		                                        //トークン "(" に構文エラーがあります。正しくは ; です*/
 
     	int A = 10;
     	int B = 10;
         g.setColor(Color.blue);
-		g.fillOval(x-A/2, y-B/2, A, B);//57行目の数値をここに代入したい
+		g.fillOval(x-A/2, y-B/2, A, B);
 
 		String cmd = e.getActionCommand();
 		if (cmd.equals("1")){
