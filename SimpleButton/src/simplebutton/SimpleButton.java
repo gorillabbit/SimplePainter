@@ -23,13 +23,16 @@ public class SimpleButton extends JFrame implements ActionListener{
 	//「PenSize」ボタンが押された回数を制御する変数(int型)
 	//こちらはこのクラス内でしか使わないので静的メンバである必要はない。
 	public int count = 0;
+	
+	public static boolean ischangedpensize2 = false;
+	public int count2 = 0;
 
 	public static void main(String[] args) {
 		SimpleButton frame = new SimpleButton("簡単なお絵かきソフト");
 		frame.setVisible(true);
 
-		Canvas c = new Canvas();
-		frame.add(c);
+		Canvas canvas = new Canvas();
+		frame.add(canvas);
 	}
 
 	SimpleButton(String title){
@@ -37,24 +40,29 @@ public class SimpleButton extends JFrame implements ActionListener{
 		setBounds(100,100,500,450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel p = new JPanel();
-		p.setLayout(new BoxLayout(p,BoxLayout.PAGE_AXIS));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
 
-		JButton button =new JButton("PenSize");
+		JButton button = new JButton("PenSize→20");
 		int height = button.getMaximumSize().height;
 		button.setMaximumSize(new Dimension(200, height));
 		button.addActionListener(this);
-		button.setActionCommand("1");//ここが一番の更新
+		
+		JButton button2 = new JButton("PenSize→30");
+		int height2 = button2.getMaximumSize().height;
+		button2.setMaximumSize(new Dimension(200, height2));
+		button2.addActionListener(this);
 
-		p.add(button);
+		panel.add(button);
+		panel.add(button2);
 
 		Container contentPane = getContentPane();
-		contentPane.add(p, BorderLayout.CENTER);
+		contentPane.add(panel, BorderLayout.CENTER);
 		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println("Button pushed");
+		System.out.println("Button pushed");
 		count++; //ボタンが押された回数を制御するcountを一増やす
 		int calc = count % 2; //押された回数が偶数回目か奇数回目か判定するため，2で割って余りを求める
 		if(count == 0){
@@ -62,12 +70,22 @@ public class SimpleButton extends JFrame implements ActionListener{
 			SimpleButton.ischangedpensize = false;
 		} else if(!(calc == 0)){
 			//奇数回目ではPenSizeを大きくするため，ischangedpensizeにtrueを代入する
-			//System.out.println("奇数回目のクリック");
+			System.out.println("奇数回目のクリック");
 			SimpleButton.ischangedpensize = true;
 		} else if(calc == 0){
 			//偶数回目ではPenSizeを元に戻すため，ischangedpensizeにfalseを代入する
-			//System.out.println("偶数回目のクリック");
+			System.out.println("偶数回目のクリック");
 			SimpleButton.ischangedpensize = false;
+		}
+		
+		count2++;
+		int calc2 = count2 % 2;
+		if(count2 == 0){
+			SimpleButton.ischangedpensize2 = false;
+		} else if(!(calc2 == 0)){
+			SimpleButton.ischangedpensize2 = true;
+		} else if(calc2 == 0){
+			SimpleButton.ischangedpensize2 = false;
 		}
 
 	}
@@ -92,22 +110,17 @@ class Canvas extends JPanel implements MouseListener,MouseMotionListener {
     		//って，全部同じ値なのね，コレなら2つ変数を宣言しなくてもいいかも。
     		//演算子と数値の間にスペースを入れたほうが見やすくなるよ。 
     		g.fillOval(x - size / 2, y - size / 2, size, size);
+    	}else if(SimpleButton.ischangedpensize2){
+    		int size =30;
+    		g.setColor(Color.BLUE);
+    		g.fillOval(x - size/ 2 , y - size / 2, size, size);
     	} else {
     		//ボタンが押されていなければ10の円を生成する。
     		int size = 10;
     		g.setColor(Color.blue);
     		g.fillOval(x - size / 2, y - size / 2, size, size);
     	}
-
-		//String cmd = e.getActionCommand();
-		/*if (cmd.equals("1")){
-			A = 20;
-		}*/
     }
-
-    /* 変数 actionPerformed に void は無効な型です
-    //トークン ")" に構文エラーがあります。正しくは ; です*/
-    //トークン "(" に構文エラーがあります。正しくは ; です*/
 
     //インデントが崩れていたので修正。IDEにはインデントを自動で調節してくれる機能があるので，それを使うと良い。
     public void actionPerformed(ActionEvent e) {
